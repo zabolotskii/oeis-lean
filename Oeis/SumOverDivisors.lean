@@ -1,8 +1,6 @@
 /-
 This file was edited by Aristotle. (And by me, Andrei Z.: see README.md.)
 
-Lean version: leanprover/lean4:v4.24.0
-Mathlib version: f897ebcf72cd16f89ab4577d0c826cd14afaafc7
 This project request had uuid: c1809653-bb2c-48ca-946b-64a334c60dc0
 
 The following was proved by Aristotle:
@@ -18,6 +16,7 @@ import Mathlib.Data.Nat.Basic
 import Mathlib.Algebra.BigOperators.Group.Finset.Defs
 import Mathlib.NumberTheory.Divisors
 
+set_option linter.style.header false
 set_option linter.style.longLine false
 
 
@@ -204,6 +203,7 @@ theorem signs : ∀ n : ℕ, (Odd n → a n ≥ 0) ∧ (Even n → a n ≤ 0) :=
         simp [odd_t]
       have h_sign : ∀ m < 2 * k + 1, (Odd m → a m ≥ 0) ∧ (Even m → a m ≤ 0) := by
         intro m hm; rcases m with ( _ | _ | m ) <;> norm_num [a_simp.1]
+        norm_num at hm
         exact ih (m+2) hm (by omega) (by omega) (by omega)
       exact sum_geometric_progression_le_zero t odd_t k h_odd_div h_sign
     exact h_def.symm ▸ neg_nonneg_of_nonpos ( h_group.symm ▸ Finset.sum_nonpos h_inner );
